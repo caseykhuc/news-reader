@@ -10,6 +10,7 @@ const GlobalStyles = createGlobalStyle`
       overflow-x: hidden;
       margin: 0;
       padding: 0;
+      background-color: #272727;
     }
     ul {
       list-style: none;
