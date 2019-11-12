@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   height: 100%;
   overflow: hidden;
   padding-bottom: 200px;
+  text-align: center;
 
   ${tablet} {
     width: 96%;

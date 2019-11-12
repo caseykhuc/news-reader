@@ -22,8 +22,14 @@ const story = (state = getInitialState(), { type, payload }) => {
     case actionsTypes.FETCH_STORIES_REQUEST:
       return {
         ...state,
-        stories: [...state.stories, ...payload.stories],
-        page: state.page + 1
+        stories: [/* ...state.stories, */ ...payload.stories],
+        page: payload.page
+        /* page: state.page + 1 */
+      };
+    case actionsTypes.CLEAN_STORIES_REQUEST:
+      return {
+        ...state,
+        stories: []
       };
     default:
       return state;
