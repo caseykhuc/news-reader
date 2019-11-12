@@ -5,6 +5,7 @@ import List from "components/List";
 import { Wrapper, Title } from "./styles";
 import { connect } from "react-redux";
 import { fetchStoryIds, fetchStories } from "store/story/actions";
+import Loader from "../Loader";
 
 class App extends React.Component {
   componentDidMount() {
@@ -19,16 +20,19 @@ class App extends React.Component {
     }
   } */
 
+  renderList(stories) {
+    if (stories.length > 0) return <List stories={stories} />;
+    return <Loader />;
+  }
+
   render() {
     const { stories } = this.props.story;
     return (
       <ThemeProvider theme={colorsDark}>
-        <div>
-          <Wrapper>
-            <Title>News Reader</Title>
-            <List stories={stories} />
-          </Wrapper>
-        </div>
+        <Wrapper>
+          <Title>News Reader</Title>
+          {this.renderList(stories)}
+        </Wrapper>
       </ThemeProvider>
     );
   }

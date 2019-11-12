@@ -16,7 +16,7 @@ const List = ({ stories }) => {
   return (
     <ListWrapper>
       {stories.map(story => (
-        <ListItem key={stories.id} {...story} />
+        <ListItem key={story.id} {...story} />
       ))}
     </ListWrapper>
   );
