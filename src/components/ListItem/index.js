@@ -18,7 +18,7 @@ const ListItem = () => {
           The Developer Community <Host>(gitconnected.com)</Host>
         </Title>
       </ExternalLink>
-      <CommentLink>
+      <Description>
         9000 points by{" "}
         <CommentLink href="#" rel={LINK_REL} target="_blank">
           Test User
@@ -27,7 +27,7 @@ const ListItem = () => {
         <CommentLink href="#" rel={LINK_REL} target="_blank">
           42 Comments
         </CommentLink>
-      </CommentLink>
+      </Description>
     </Item>
   );
 };
