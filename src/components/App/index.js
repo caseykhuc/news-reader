@@ -1,13 +1,15 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
-import { colorsDark } from "styles/palette";
+import { colorsDark, colorsLight } from "styles/palette";
 import List from "components/List";
-import { Wrapper, Title } from "./styles";
+import Grid from "components/Grid";
+import { Wrapper } from "./styles";
 import { connect } from "react-redux";
 import { fetchStoryIds, fetchStories } from "store/story/actions";
 /* import { hasMoreStoriesSelector } from "store/story/selectors"; */
 import Loader from "../Loader";
 import Pagination from "../Pagination";
+import Nav from "../Nav";
 
 class App extends React.Component {
   componentDidMount() {
@@ -21,19 +23,42 @@ class App extends React.Component {
     return <Loader />;
   }
 
+  renderGrid(stories) {
+    if (stories.length > 0) return <Grid stories={stories} />;
+    return <Loader />;
+  }
+
   handlePageClick() {
     return;
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.theme !== this.props.theme) {
+      this.setBodyBackgroundColor();
+    }
+  }
+
+  setBodyBackgroundColor() {
+    if (this.props.theme === "light") {
+      document.body.style = `background-color: ${colorsLight.background};`;
+    } else {
+      document.body.style = `background-color: ${colorsDark.background};`;
+    }
+  }
+
   render() {
-    const { stories } = this.props.story;
+    const { stories, theme, layout } = this.props;
     return (
-      <ThemeProvider theme={colorsDark}>
-        <Wrapper>
-          <Title>News Reader</Title>
-          {this.renderList(stories)}
-          <Pagination />
-        </Wrapper>
+      <ThemeProvider theme={theme == "dark" ? colorsDark : colorsLight}>
+        <div>
+          <Wrapper>
+            <Nav />
+            {layout === "list"
+              ? this.renderList(stories)
+              : this.renderGrid(stories)}
+            <Pagination />
+          </Wrapper>
+        </div>
       </ThemeProvider>
     );
   }
@@ -42,7 +67,11 @@ class App extends React.Component {
 const mapStateToProps = state => {
   console.log("state");
   console.log(state);
-  return { story: state.story };
+  return {
+    stories: state.story.stories,
+    theme: state.app.theme,
+    layout: state.app.layout
+  };
 };
 
 export default connect(
